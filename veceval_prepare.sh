@@ -36,6 +36,7 @@ set -o nounset
 
 for task in sentiment questions ner chunk nli pos
 do
+  echo "Preparing data for $task"
   TRAIN_LOCATION=$ROOTDIR"/data/"$task"/scripts/"
   cd $TRAIN_LOCATION
   bash prepare_data.sh
