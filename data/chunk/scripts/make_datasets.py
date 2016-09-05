@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#neri -*- coding: utf-8 -*-
 import sys
 import codecs
 import pickle
@@ -47,7 +47,6 @@ def main():
   train_labels = sorted(list(set([label for window, label in train_windows])))
   train_labels.append('I-LST')  # Missing from training set
   labels = sorted(set(train_labels))
-  print labels
   label_map = dl.make_label_map(labels)
 
   for dataset, filename in zip([train_windows],
