@@ -27,7 +27,7 @@ class QuestionsFinetunedTrainer(Trainer):
     self.embeddings = pickle.load(open(self.embedding_path, 'r'))
     self.ds = IndexDataset(self.train_data_path, self.embeddings,
                            ve.QUESTIONS_MAX_LEN, has_validation=False,
-                           is_testing=False)
+                           is_testing=ve.IS_TESTING)
 
     # Define model 
     self.hp = ve.read_hp(config_path)

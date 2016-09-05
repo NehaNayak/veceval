@@ -23,6 +23,8 @@ VAL = "val"
 FINE = "finetuned"
 FIXED = "fixed"
 
+IS_TESTING = False
+
 # General hyperparameters
 DROPOUT_PROB = 0.5
 EMBEDDING_SIZE = 50
@@ -31,7 +33,8 @@ WINDOW_SIZE = 5
 CAPS_DIMS = 5
 STOP_EPOCHS = 15
 POS_STOP_EPOCHS = 10
-MAX_EPOCHS = 500
+#MAX_EPOCHS = 500
+MAX_EPOCHS = 1
 BATCH_SIZE = 128
 
 # Task-specific hyperparameters

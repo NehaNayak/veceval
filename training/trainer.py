@@ -4,16 +4,18 @@ import time
 
 class Trainer(object):
 
-  def __init__(self, is_testing=False):
-    self.is_testing = is_testing
+  def __init__(self):
     pass
 
   def evaluate(self, set_to_evaluate=ve.VAL): # Overridden for NER, NLI
     if set_to_evaluate == ve.VAL:
       (X, Y) = self.ds.X_val, self.ds.Y_val
-    else:
-      assert set_to_evaluate == ve.TRAIN
+    elif set_to_evaluate == ve.TRAIN:
       (X, Y) = self.ds.X_train, self.ds.Y_train
+    else:
+      assert set_to_evaluate == ve.TEST and ve.TESTING == True
+      (X, Y) = self.ds.X_test, self.ds.Y_test
+
     _, acc = self.model.evaluate(X, Y)
     return set_to_evaluate, acc
 
@@ -41,12 +43,9 @@ class Trainer(object):
                                                             self.ds.Y_val),
         callbacks=callbacks)
 
-  def test(self):
-    self.model.load_weights(self.checkpoint_path)
-    self.evaluate()
-
   def train_and_test(self):
     self.train()
-    self.test()
-    self.print_result(ve.TRAIN)
-    self.print_result(ve.VAL)
+    for set_to_evaluate in [ve.TRAIN, ve.VAL]:
+        self.print_result(set_to_evaluate)
+    if ve.IS_TESTING:
+        self.print_result(ve.TEST)

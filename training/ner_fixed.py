@@ -25,7 +25,7 @@ class NERFixedTrainer(Trainer):
     self.embeddings = pickle.load(open(self.embedding_path, 'r'))
     self.ds = EmbeddingWindowCapsDataset(
         self.train_data_path, self.embeddings, has_validation=True,
-        has_caps=True, is_testing=False)
+        has_caps=True, is_testing=ve.IS_TESTING)
 
     # Define model 
     self.hp = ve.read_hp(config_path)
@@ -49,10 +49,12 @@ class NERFixedTrainer(Trainer):
   def evaluate(self, set_to_evaluate=ve.VAL):
     if set_to_evaluate == ve.VAL:
       (X, Y) = self.ds.X_val, self.ds.Y_val
-    else:
-      assert set_to_evaluate == ve.TRAIN
+    elif set_to_evaluate == ve.TRAIN:
       (X, Y) = self.ds.X_train, self.ds.Y_train
-
+    else:
+      assert set_to_evaluate == ve.TEST and ve.IS_TESTING == True
+      (X, Y) = self.ds.X_test, self.ds.Y_test
+  
     predictions = self.model.predict(X)
     result = ve.calculate_f1(predictions, Y)
 

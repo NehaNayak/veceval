@@ -26,7 +26,7 @@ class NLIFixedTrainer(Trainer):
     self.embeddings = pickle.load(open(self.embedding_path, 'r'))
     self.ds = EmbeddingPairDataset(self.train_data_path, self.embeddings,
                            ve.NLI_MAX_LEN, has_validation=True,
-                           is_testing=False)
+                           is_testing=ve.IS_TESTING)
 
     # Define model 
     self.hp = ve.read_hp(config_path)
@@ -61,11 +61,15 @@ class NLIFixedTrainer(Trainer):
                         callbacks=callbacks)
 
   def evaluate(self, set_to_evaluate=ve.VAL):
+
     if set_to_evaluate == ve.VAL:
       (X_p, X_h, Y) = self.ds.X_p_val, self.ds.X_h_val, self.ds.Y_val
-    else:
-      assert set_to_evaluate == ve.TRAIN
+    elif set_to_evaluate == ve.TRAIN:
       (X_p, X_h, Y) = self.ds.X_p_train, self.ds.X_h_train, self.ds.Y_train
+    else:
+      assert set_to_evaluate == ve.TEST and ve.TESTING == True
+      (X_p, X_h, Y) = self.ds.X_p_test, self.ds.X_h_test, self.ds.Y_test
+
     _, acc = self.model.evaluate([X_p, X_h], Y)
     return set_to_evaluate, acc
 

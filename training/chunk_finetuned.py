@@ -25,7 +25,7 @@ class ChunkFinetunedTrainer(Trainer):
     # Get embeddings
     self.embeddings = pickle.load(open(self.embedding_path, 'r'))
     self.ds = IndexWindowCapsDataset(self.train_data_path, self.embeddings,
-                                     has_validation=False, is_testing=False)
+                                     has_validation=False, is_testing=ve.IS_TESTING)
 
     # Define model 
     self.hp = ve.read_hp(config_path)
