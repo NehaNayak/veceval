@@ -1,0 +1,4 @@
+optimizer	RMSprop
+learning_rate	0.01
+dense_l2	0
+embedding_l2	0.0001
