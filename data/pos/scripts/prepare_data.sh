@@ -1,7 +1,7 @@
 scp nayakne@jacob.stanford.edu:/u/nlp/data/pos-tagger/english/train-wsj-0-18 .
 scp nayakne@jacob.stanford.edu:/u/nlp/data/pos-tagger/english/test-wsj-19-21 .
 
-wget https://raw.githubusercontent.com/slavpetrov/universal-pos-tags/master/en-ptb.map
+curl -O https://raw.githubusercontent.com/slavpetrov/universal-pos-tags/master/en-ptb.map
 
 cat train-wsj-0-18 | python preprocess_files.py en-ptb.map
 cat test-wsj-19-21 | python preprocess_files.py en-ptb.map

@@ -1,4 +1,4 @@
-wget http://www.seas.upenn.edu/~nlp/resources/ppdb-2.0-human-labels.tgz
+curl -O http://www.seas.upenn.edu/~nlp/resources/ppdb-2.0-human-labels.tgz
 tar -zxf ppdb-2.0-human-labels.tgz
 mv human-labeled-data/ppdb-sample.tsv ./
 rm -r human-labeled-data/
